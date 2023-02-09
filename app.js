@@ -28,7 +28,6 @@ keys.addEventListener("click", function(e){
         console.log("operator", el.textContent);
         handleOperator(el.textContent);
         newDisplay()
-
         return; 
     }
     //decimal dont work again
@@ -44,12 +43,14 @@ keys.addEventListener("click", function(e){
         return;
     }
 
-    if(el.classList.contains('percent')){
-        console.log("percent", el.textContent);
-        
+    if(el.classList.contains('pm')){
+        //-number
+        convertNumber()
+        newDisplay();
         return;
   
     }
+
     
     inputNumber(el.textContent);
     newDisplay();
@@ -83,8 +84,6 @@ function clearDisplay() {
     previousDisplayValue = "0";
 
 }
-
-
 function handleOperator(nextOperator) {
     const value = parseFloat(displayValue);
 
@@ -98,7 +97,7 @@ function handleOperator(nextOperator) {
         const result = calculate(previousDisplayValue, value, operator);
         displayValue = result.toFixed(2);
         previousDisplayValue = result;
-    }
+     }
     waitingForSecondValue = true;
     operator = nextOperator;
 
@@ -115,8 +114,15 @@ function calculate(previousValue, currentValue, operator) {
     }else if(operator === '÷'){
         return previousValue / currentValue 
     }
+    else if(operator === '%'){
+        return previousValue * currentValue / 100 
+    }
     return currentValue;
 }
+function convertNumber() {
+        displayValue   *= -1;  
+}
+
 
         
 
